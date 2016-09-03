@@ -21,14 +21,25 @@
     $(function() {
        $(document).on('click', '#button', function (e) {
            e.preventDefault();
-           var items = [
-               1,
-               2,
-               3,
-               'Train'
-           ];
-           var item = items[Math.floor(Math.random()*items.length)];
-           $('#result').text(item);
+           var $result = $('#result');
+           var $btn = $(this);
+           if ($btn.hasClass('disabled')) {
+               return false;
+           }
+           $btn.addClass('disabled');
+           $result.text('Spinning...');
+           setTimeout(function() {
+                var items = [
+                   1,
+                   2,
+                   3,
+                   'Train'
+               ];
+               var item = items[Math.floor(Math.random()*items.length)];
+               $result.text(item);
+               $btn.removeClass('disabled');
+           }, 1000);
+
        });
     });
 </script>
