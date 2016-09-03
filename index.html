@@ -3,44 +3,57 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>Monopoly City Dice</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
 <body>
-    <div class="container text-center">
+<div class="container text-center">
 
-        <h3>Monopoly City Dice</h3>
+    <h3>Monopoly City Dice</h3>
 
-        <a id="button" style="margin:30px 0; padding:25px 40px; font-size:24px;" class="btn btn-lg btn-info">Roll</a>
+    <a id="button" style="margin:30px 0; padding:25px 40px; font-size:24px;" class="btn btn-lg btn-info">Roll</a>
 
-        <div id="result" style="padding:30px; font-weight:bold; font-size:30px;"></div>
+    <div id="result" style="padding:30px; font-weight:bold; font-size:30px;"></div>
 
-    </div>
+</div>
 
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/shake.js/shake.js"></script>
 <script>
-    $(function() {
-       $(document).on('click', '#button', function (e) {
-           e.preventDefault();
-           var $result = $('#result');
-           var $btn = $(this);
-           if ($btn.hasClass('disabled')) {
-               return false;
-           }
-           $btn.addClass('disabled');
-           $result.text('Rolling...');
-           setTimeout(function() {
-                var items = [
-                   1,
-                   2,
-                   3,
-                   'Train'
-               ];
-               var item = items[Math.floor(Math.random()*items.length)];
-               $result.text(item);
-               $btn.removeClass('disabled');
-           }, 500);
+    $(function () {
 
-       });
+        function roll() {
+            var $result = $('#result');
+            var $btn = $('#button');
+            if ($btn.hasClass('disabled')) {
+                return false;
+            }
+            $btn.addClass('disabled');
+            $result.text('Rolling...');
+            setTimeout(function () {
+                var items = [
+                    1,
+                    2,
+                    3,
+                    'Train'
+                ];
+                var item = items[Math.floor(Math.random() * items.length)];
+                $result.text(item);
+                $btn.removeClass('disabled');
+            }, 500);
+        }
+
+        $(document).on('click', '#button', function (e) {
+            e.preventDefault();
+            roll();
+        });
+
+        window.addEventListener('shake', roll, false);
+
+        var shakeEvent = new Shake({
+            threshold: 15, // optional shake strength threshold
+            timeout: 1000 // optional, determines the frequency of event generation
+        });
+        shakeEvent.start();
     });
 </script>
 </body>
